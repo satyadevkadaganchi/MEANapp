@@ -1,5 +1,13 @@
 var http = require('http');
 var fs = require('fs');
+var colors = require('colors');
+var m = require('mmm');
+
+
+console.log(m.add(3,5));
+console.log(m.multiply(4,5));
+console.log(m.factorial(4));
+console.log('Hello world'.green);
 
 http.createServer(function (req,res){
     if(req.url === '/favicon.ico'){

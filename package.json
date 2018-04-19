@@ -1,0 +1,26 @@
+{
+  "name": "meanapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "colors": "^1.2.1",
+    "express": "^4.16.3",
+    "express-generator": "^4.16.0",
+    "gatsby": "^1.9.246"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/satyadevkadaganchi/MEANapp.git"
+  },
+  "author": "Satyadev kadaganchi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/satyadevkadaganchi/MEANapp/issues"
+  },
+  "homepage": "https://github.com/satyadevkadaganchi/MEANapp#readme"
+}
