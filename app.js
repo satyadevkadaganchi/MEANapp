@@ -1,7 +1,7 @@
 var http = require('http');
 var fs = require('fs');
 var colors = require('colors');
-var m = require('mmm');
+var m = require('./math-module/mmm');
 
 
 console.log(m.add(3,5));
