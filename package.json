@@ -7,7 +7,8 @@
     "colors": "^1.2.1",
     "express": "^4.16.3",
     "express-generator": "^4.16.0",
-    "gatsby": "^1.9.246"
+    "gatsby": "^1.9.246",
+    "mongoose": "^5.1.1"
   },
   "devDependencies": {},
   "scripts": {

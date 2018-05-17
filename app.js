@@ -2,7 +2,43 @@ var http = require('http');
 var fs = require('fs');
 var colors = require('colors');
 var m = require('./math-module/mmm');
+var mongoose = require('mongoose');
+var db = mongoose.connection;
+var dbUrl = 'mongodb://localhost:27017/humanresources'; 
+var dummyUrl = 'mongodb://username:password@ds043917.mongolab.com:43917'; 
 
+var TeamSchema = new mongoose.Schema({
+    name: {
+      type: String,
+      required: true  
+    }
+});
+
+var Team = mongoose.model('Team', TeamSchema);
+
+db.on('error', function(){
+    console.log('there was an error communicating with database');
+});
+
+mongoose.connect(dbUrl, function(err){
+    if(err) {
+        return console.log('therewas aproblem connecting to database '+ err);
+    }
+    console.log('connected');
+    var team = new Team({
+        name: 'product Development'
+    });
+    
+    team.save(function(error, data){
+        if(error){
+            console.log(error);
+        }else {
+            console.dir(data._doc);
+        }
+        db.close();
+        process.exit();
+    })
+})
 
 console.log(m.add(3,5));
 console.log(m.multiply(4,5));
