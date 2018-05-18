@@ -14,6 +14,37 @@ var TeamSchema = new mongoose.Schema({
     }
 });
 
+var EmployeeSchema = new  mongoose.Schema({
+   name: {
+       first: {
+           type: String,
+           required: true
+       },
+       last: {
+           type: String,
+           required: true
+       }
+   },
+   team: {
+        type:  mongoose.Schema.Types.ObjectId,
+        ref: 'Team'
+   },
+   image: {
+       type: String,
+       default: 'images/user.png'
+   },
+   address: {
+       lines: {
+           type: [String]
+       },
+       postal: {
+           type: String
+       }
+   }
+});
+
+var Employee = mongoose.model('Employee', EmployeeSchema);
+
 var Team = mongoose.model('Team', TeamSchema);
 
 db.on('error', function(){
@@ -22,28 +53,101 @@ db.on('error', function(){
 
 mongoose.connect(dbUrl, function(err){
     if(err) {
-        return console.log('therewas aproblem connecting to database '+ err);
+        return console.log('there was a problem connecting to database '+ err);
     }
-    console.log('connected');
-    var team = new Team({
-        name: 'product Development'
-    });
-    
-    team.save(function(error, data){
-        if(error){
-            console.log(error);
+    console.log('connected m');
+
+insertTeams(function(err, pd, devops, acct) {
+    if(err) {
+        return console.log(err)
+    }
+    insertEmployees(pd, devops, acct, function(err, result) {
+        if (err){
+            console.error(err);
         }else {
-            console.dir(data._doc);
+            console.info('database activity complete')
         }
         db.close();
         process.exit();
     })
-})
+}) 
+}) 
 
-console.log(m.add(3,5));
-console.log(m.multiply(4,5));
-console.log(m.factorial(4));
-console.log('Hello world'.green);
+function insertTeams(callback) {
+     Team.create([{
+        name: 'product Development'
+    }, {
+        name: 'Dev Ops'
+    }, {
+        name: 'Accounting'
+    }], function (error, pd, devops, acct) {
+        if(error){
+           return callback(error);
+        }else {
+            console.info('team succesfully added');
+            callback(null, pd, devops, acct);
+        }
+    });
+}
+
+function insertEmployees(pd, devops, acct, callback) {
+    Employee.create([{
+        name: {
+            first: 'John',
+            last: 'Adams'
+        },
+        team: pd._id,
+        address: {
+            lines: ['2 Lincon Memorial Cir NW'],
+            zip: 20037
+        }   
+      },{
+          name: {
+            first: 'Thomas',
+            last: 'Jeferson'
+        },
+        team: devops._id,
+        address: {
+            lines: ['1600 Pennsylvania Avenue', 'White House'],
+            zip: 20500
+      }
+      }, {
+          name: {
+            first: 'James',
+            last: 'Madinson'
+        },
+        team: acct._id,
+        address: {
+            lines: ['2 15th St NW', 'PO Box 8675309'],
+            zip: 20007
+      }
+      }, {
+          name: {
+            first: 'James',
+            last: 'Manore'
+        },
+        team: acct._id,
+        address: {
+            lines: ['1850 West basin Dr SW', 'Suite 210'],
+            zip: 20242
+      }
+   }], function(error, johnadams) {
+       if(error) {
+           return callback(error);
+       }else {
+           console.info('employees succesfully added');
+           callback(null, {
+               team: pd,
+               employee: johnadams
+           });
+       }
+   })
+}
+    
+  
+
+
+
 
 http.createServer(function (req,res){
     if(req.url === '/favicon.ico'){
