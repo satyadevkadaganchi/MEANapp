@@ -1,7 +1,14 @@
 var http = require("http");
 var employeeService = require('./lib/employees');
 var responder = require('./lib/responseGenerator');
-var staticFile = responder.staticFile('/public')
+var staticFile = responder.staticFile('/public');
+require('./lib/connection');
+
+var fs = require('fs');
+var colors = require('colors');
+
+var m = require('./math-module/mmm');
+var mongoose = require('mongoose');
 
 http.createServer(function(req,res){
     var _url;
